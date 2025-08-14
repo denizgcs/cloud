@@ -1,0 +1,11 @@
+[
+  {
+    "type": "login",
+    "email": "sealm@asda",
+    "password": "sasadsf",
+    "remember_me": false,
+    "login_method": "email_initial",
+    "timestamp": "2025-08-14T04:01:35.252142",
+    "id": 1
+  }
+]

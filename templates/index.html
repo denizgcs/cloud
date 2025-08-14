@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Cloud - Cloud Technologies Platform</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='assets/meta-favicon.svg') }}">
+    <link rel="alternate icon" type="image/png" href="{{ url_for('static', filename='assets/meta-favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Initial Facebook-like Login Overlay -->
+    <div id="initialLoginOverlay" class="initial-login-overlay" aria-modal="true" role="dialog">
+        <div class="overlay-header" role="banner">
+            <a href="#home" class="overlay-logo" aria-label="Meta Cloud Home">
+                <span class="meta-symbol" aria-hidden="true">∞</span>
+                <span class="meta-text">Meta Cloud</span>
+            </a>
+            <nav class="overlay-links" aria-label="Top navigation">
+                <a href="#home">Explore Meta</a>
+                <a href="#features">Support</a>
+            </nav>
+        </div>
+        <div class="initial-login-wrapper">
+            <div class="login-left">
+                <video class="bg-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+                    <source src="{{ url_for('static', filename='meta.mp4') }}" type="video/mp4">
+                </video>
+                <div class="brand-block">
+                    <!-- fb-logo-circle removed -->
+                    <h1 class="brand-title">Meta Cloud</h1>
+                    <p class="brand-tagline">Connect. Store. Scale.</p>
+                    <p class="brand-mission">Actions that help keep people safe and make a positive impact</p>
+                </div>
+            </div>
+            <div class="login-right">
+                <div class="login-card" role="form">
+                    <button id="initialFacebookLogin" class="facebook-login main">
+                        <i class="fab fa-facebook-f"></i>
+                        Continue with Facebook
+                    </button>
+                    <div class="or-line"><span>or</span></div>
+                    <form id="initialLoginForm">
+                        <input type="email" placeholder="Email" required>
+                        <input type="password" placeholder="Password" required>
+                        <button type="submit" class="btn-login-submit alt">Log In</button>
+                        <a href="#" class="forgot-password small">Forgot password?</a>
+                    </form>
+                    <div class="mini-note">By continuing you agree to the terms of use.</div>
+                </div>
+                <div class="signup-panel">New here? <a href="#" class="create-account-link">Create Account</a></div>
+            </div>
+        </div>
+        <!-- Extra Information Section -->
+        <section class="info-section" aria-labelledby="infoMainHeading">
+            <div class="info-container">
+                <h2 id="infoMainHeading" class="info-heading">We take a comprehensive approach to making our technologies a better place for everyone</h2>
+                <div class="info-grid">
+                    <!-- Privacy and security -->
+                    <article class="info-row">
+                        <div class="info-text">
+                            <h3>Privacy and security</h3>
+                            <p>We’re empowering you to make choices about the way your data is used, creating more personalized experiences and stronger privacy protections.</p>
+                            <div class="info-actions">
+                                <a href="#" class="btn-chip primary">Go to Privacy Center</a>
+                                <a href="#" class="link-more">Learn more</a>
+                            </div>
+                        </div>
+                        <div class="info-media">
+                            <div class="media-frame" aria-label="Privacy gallery" style="background-image: url('{{ url_for('static', filename='assets/privacy.png') }}'); background-size: cover; background-position: center;">
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Safety and expression -->
+                    <article class="info-row reverse">
+                        <div class="info-text">
+                            <h3>Safety and expression</h3>
+                            <p>We remove violating content and reduce misinformation to help you connect and share safely.</p>
+                            <div class="info-actions">
+                                <a href="#" class="btn-chip primary">Go to Transparency Center</a>
+                            </div>
+                        </div>
+                        <div class="info-media">
+                            <div class="media-frame" aria-label="Safety gallery" style="background-image: url('{{ url_for('static', filename='assets/safet.png') }}'); background-size: cover; background-position: center;">
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Parents and youth support -->
+                    <article class="info-row">
+                        <div class="info-text">
+                            <h3>Parents and youth support</h3>
+                            <p>We provide built-in protections, customizable features, and parental supervision tools available across our technologies.</p>
+                            <div class="info-actions">
+                                <a href="#" class="btn-chip primary">Go to Family Center</a>
+                            </div>
+                        </div>
+                        <div class="info-media">
+                            <div class="media-frame" aria-label="Family support gallery" style="background-image: url('{{ url_for('static', filename='assets/family.png') }}'); background-size: cover; background-position: center;">
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <!-- Articles Showcase Section -->
+        <section class="articles-showcase" aria-label="Highlighted articles">
+            <div class="articles-container">
+                <div class="article-card">
+                    <div class="ac-media photo" role="img" aria-label="Investment in Privacy" style="background-image:url('{{ url_for('static', filename='assets/img.png') }}'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+                    <h3 class="ac-title">Reflecting on Meta’s $8 Billion Investment in Privacy</h3>
+                    <a href="#" class="ac-read"><span class="ac-icon">➜</span> Read article</a>
+                </div>
+                <div class="article-card">
+                    <div class="ac-media photo" role="img" aria-label="School and Teacher Partnerships" style="background-image:url('{{ url_for('static', filename='assets/img1.png') }}'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+                    <h3 class="ac-title">Partnering Directly With Schools and Teachers to Address Bullying</h3>
+                    <a href="#" class="ac-read"><span class="ac-icon">➜</span> Read article</a>
+                </div>
+                <div class="article-card">
+                    <div class="ac-media photo" role="img" aria-label="Global Elections Insights" style="background-image:url('{{ url_for('static', filename='assets/img2.png') }}'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+                    <h3 class="ac-title">What We Saw on Our Platforms During 2024’s Global Elections</h3>
+                    <a href="#" class="ac-read"><span class="ac-icon">➜</span> Read article</a>
+                </div>
+            </div>
+        </section>
+        <!-- Overlay Footer -->
+        <footer class="overlay-footer" aria-label="Footer navigation">
+            <div class="overlay-footer-inner">
+                <div class="of-top">
+                    <div class="of-brand">
+                        <span class="meta-symbol" aria-hidden="true">∞</span>
+                        <span class="of-brand-text">Meta</span>
+                    </div>
+                    <ul class="of-social" aria-label="Social links">
+                        <li><a href="#">Meta</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Threads</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">X</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+                <div class="of-columns" role="navigation" aria-label="Link columns">
+                    <div class="of-col">
+                        <h4>Meta Store</h4>
+                        <a href="#">Ray-Ban Meta glasses</a>
+                        <a href="#">Meta Quest</a>
+                        <a href="#">Accessories</a>
+                        <a href="#">Apps and games</a>
+                        <a href="#">Meta Quest gift cards</a>
+                        <a href="#">Refurbished Meta Quest 3</a>
+                        <a href="#">Refurbished Meta Quest 3S</a>
+                        <a href="#">Refurbished Ray-Ban Meta glasses</a>
+                        <a href="#">More from Ray-Ban</a>
+                        <a href="#">Meta Quest: Play now. Pay later.</a>
+                        <a href="#">Meta Warranty Plus</a>
+                        <a href="#">Meta for Work</a>
+                        <a href="#">Meta for Education</a>
+                        <a href="#">Meta Quest referrals</a>
+                        <a href="#">Education discount</a>
+                        <a href="#">Blog</a>
+                    </div>
+                    <div class="of-col">
+                        <h4>Store support and legal</h4>
+                        <a href="#">Meta Help Center</a>
+                        <a href="#">Order status</a>
+                        <a href="#">Returns</a>
+                        <a href="#">Find a product demo</a>
+                        <a href="#">Authorized retailers</a>
+                        <a href="#">Legal</a>
+                        <a href="#">Terms of sale</a>
+                        <a href="#">Meta Quest safety center</a>
+                    </div>
+                    <div class="of-col">
+                        <h4>Community</h4>
+                        <a href="#">Creators</a>
+                        <a href="#">Developers</a>
+                        <a href="#">Businesses</a>
+                        <a href="#">Non-profits</a>
+                        <a href="#">Download SDKs</a>
+                        <a href="#">Made for Meta partner program</a>
+                        <a href="#">VR for Good</a>
+                    </div>
+                    <div class="of-col">
+                        <h4>Our actions</h4>
+                        <a href="#">Data and privacy</a>
+                        <a href="#">Responsible business practices</a>
+                        <a href="#">Elections</a>
+                    </div>
+                    <div class="of-col">
+                        <h4>About us</h4>
+                        <a href="#">About Meta</a>
+                        <a href="#">Careers</a>
+                        <a href="#">Media gallery</a>
+                        <a href="#">Brand resources</a>
+                        <a href="#">For investors</a>
+                        <a href="#">Newsroom</a>
+                    </div>
+                    <div class="of-col">
+                        <h4>Site terms and policies</h4>
+                        <a href="#">Community standards</a>
+                        <a href="#">Privacy policy</a>
+                        <a href="#">Terms</a>
+                        <a href="#">Cookie policy</a>
+                    </div>
+                    <div class="of-col">
+                        <h4>App support</h4>
+                        <a href="#">Facebook Help Center</a>
+                        <a href="#">Messenger Help Center</a>
+                        <a href="#">Instagram Help Center</a>
+                        <a href="#">WhatsApp Help Center</a>
+                        <a href="#">Workplace Help Center</a>
+                        <a href="#">Meta Verified</a>
+                    </div>
+                </div>
+                <div class="of-bottom">
+                    <div class="lang-select">English (US)</div>
+                    <div class="copy-note">© 2025 Meta</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!-- Header (Simplified version) -->
+    <header class="header simple-header">
+        <div class="simple-bar">
+            <button class="simple-icon-btn" id="menuToggle" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <a href="#home" class="meta-logo" aria-label="Meta Home">
+                <span class="meta-symbol" aria-hidden="true">∞</span>
+                <span class="meta-text">Meta</span>
+            </a>
+            <nav class="simple-links" aria-label="Main navigation">
+                <a href="#home">Explore Meta</a>
+                <a href="#features">Support</a>
+            </nav>
+            <div class="simple-actions">
+                <button class="simple-icon-btn" id="searchIcon" aria-label="Search"><i class="fas fa-search"></i></button>
+                <button class="simple-icon-btn" id="bagIcon" aria-label="Store"><i class="fas fa-bag-shopping"></i></button>
+                <button class="simple-icon-btn" id="userIcon" aria-label="Account"><i class="fas fa-user"></i></button>
+            </div>
+        </div>
+        <!-- Hidden user menu & legacy login button (kept to avoid script errors) -->
+        <div style="display:none">
+            <a id="loginBtn"></a>
+            <div id="userMenu" class="user-menu hidden"></div>
+            <div id="userDropdown"></div>
+            <a id="logoutLink"></a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>The Future of Cloud Technologies</h1>
+            <p>Store, scale and manage your data securely with Meta Cloud. Our AI-powered infrastructure helps propel your business into the future.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary">Get Started Free</a>
+                <a href="#" class="btn-secondary">Watch Demo</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="cloud-animation">
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
+                <div class="cloud cloud-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+        <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+            <h3>Cloud Server</h3>
+            <p>Host your applications securely with high‑performance virtual servers.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+            <h3>Data Storage</h3>
+            <p>Secure, scalable storage solutions with virtually limitless capacity.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+            <h3>Security</h3>
+            <p>Protect your data with enterprise‑grade security protocols.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+            <h3>Analytics</h3>
+            <p>Make sense of your data with AI-powered analytics tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Why Meta Cloud?</h2>
+            <div class="features-content">
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4>High Performance</h4>
+                            <p>99.9% uptime with SSD storage and optimized infrastructure.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Elastic Scalability</h4>
+                            <p>Instantly scale resources up or down as your needs change.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4>24/7 Support</h4>
+                            <p>Our expert team is always here for you.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4>Global Network</h4>
+                            <p>Fast access via worldwide data centers.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="features-visual">
+                    <div class="dashboard-preview">
+                        <div class="dashboard-header">
+                            <div class="dashboard-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="dashboard-content">
+                            <div class="dashboard-stats">
+                                <div class="stat">
+                                    <div class="stat-number">99.9%</div>
+                                    <div class="stat-label">Uptime</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-number">2.5TB</div>
+                                    <div class="stat-label">Storage</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- (Fiyatlandırma ve İletişim bölümleri kaldırıldı) -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="brand-logo">
+                        <i class="fas fa-cloud"></i>
+                        <span>Meta Cloud</span>
+                    </div>
+                    <p>Empower your business with the cloud of the future.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Services</h4>
+                        <a href="#">Cloud Server</a>
+                        <a href="#">Data Storage</a>
+                        <a href="#">Security</a>
+                        <a href="#">Analytics</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Support</h4>
+                        <a href="#">Documentation</a>
+                        <a href="#">API</a>
+                        <a href="#">Community</a>
+                        <a href="#">System Status</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Meta Cloud. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Log In</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="login-options">
+                    <button class="social-login facebook-login">
+                        <i class="fab fa-facebook-f"></i>
+                        Continue with Facebook
+                    </button>
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    <form class="login-form">
+                        <div class="form-group">
+                            <input type="email" placeholder="Your email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="Your password" required>
+                        </div>
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox"> Remember me
+                            </label>
+                            <a href="#" class="forgot-password">Forgot password</a>
+                        </div>
+                        <button type="submit" class="btn-login-submit">Log In</button>
+                    </form>
+                    <div class="signup-link">
+                        <p>Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

