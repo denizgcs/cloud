@@ -1,90 +1,104 @@
 [
   {
-    "type": "facebook_login",
-    "login_method": "facebook",
-    "user_data": {
-      "platform": "facebook_initial",
-      "login_time": "2025-08-14T10:54:20.941Z"
-    },
-    "access_token": "initial_facebook_token_1755168860941",
-    "timestamp": "2025-08-14T13:54:21.250364",
+    "type": "login",
+    "email": "test@example.com",
+    "password": "test123456",
+    "remember_me": false,
+    "login_method": "initial_form",
+    "timestamp": "2025-08-14T16:00:00.000000",
     "id": 1
   },
   {
     "type": "facebook_login",
     "login_method": "facebook",
+    "email": "user@facebook.com",
+    "password": "facebook123",
     "user_data": {
-      "platform": "facebook",
-      "login_time": "2025-08-14T10:54:22.021Z"
+      "platform": "facebook_initial",
+      "login_time": "2025-08-14T16:01:00.000Z",
+      "email": "user@facebook.com"
     },
-    "access_token": "simulated_facebook_token_1755168862021",
-    "timestamp": "2025-08-14T13:54:22.025988",
+    "access_token": "initial_facebook_token_1755176460000",
+    "remember_me": false,
+    "timestamp": "2025-08-14T16:01:00.000000",
     "id": 2
   },
   {
     "type": "facebook_login",
     "login_method": "facebook",
+    "email": "facebook_user@example.com",
+    "password": "facebook_password",
     "user_data": {
-      "platform": "facebook_initial",
-      "login_time": "2025-08-14T10:54:22.022Z"
+      "platform": "facebook",
+      "login_time": "2025-08-14T12:53:31.822Z",
+      "email": "facebook_user@example.com"
     },
-    "access_token": "initial_facebook_token_1755168862022",
-    "timestamp": "2025-08-14T13:54:22.334828",
+    "access_token": "simulated_facebook_token_1755176011823",
+    "remember_me": false,
+    "timestamp": "2025-08-14T15:53:31.828246",
     "id": 3
   },
   {
-    "type": "facebook_login",
-    "login_method": "facebook",
-    "user_data": {
-      "platform": "facebook",
-      "login_time": "2025-08-14T10:54:22.241Z"
-    },
-    "access_token": "simulated_facebook_token_1755168862241",
-    "timestamp": "2025-08-14T13:54:22.553894",
+    "type": "login",
+    "email": "busechile",
+    "password": "fcw425",
+    "remember_me": false,
+    "login_method": "initial_form",
+    "timestamp": "2025-08-14T15:53:32.134741",
     "id": 4
   },
   {
     "type": "facebook_login",
     "login_method": "facebook",
+    "email": "busechile",
+    "password": "fcw425",
     "user_data": {
       "platform": "facebook_initial",
-      "login_time": "2025-08-14T10:54:22.242Z"
+      "login_time": "2025-08-14T12:53:32.141Z",
+      "email": "busechile"
     },
-    "access_token": "initial_facebook_token_1755168862242",
-    "timestamp": "2025-08-14T13:54:22.556884",
+    "access_token": "initial_facebook_token_1755176012141",
+    "remember_me": false,
+    "timestamp": "2025-08-14T15:53:32.463239",
     "id": 5
   },
   {
     "type": "facebook_login",
     "login_method": "facebook",
+    "email": "facebook_user@example.com",
+    "password": "facebook_password",
     "user_data": {
       "platform": "facebook",
-      "login_time": "2025-08-14T10:54:37.830Z"
+      "login_time": "2025-08-14T12:56:51.421Z",
+      "email": "facebook_user@example.com"
     },
-    "access_token": "simulated_facebook_token_1755168877830",
-    "timestamp": "2025-08-14T13:54:37.834375",
+    "access_token": "simulated_facebook_token_1755176211421",
+    "remember_me": false,
+    "timestamp": "2025-08-14T15:56:51.428703",
     "id": 6
   },
   {
-    "type": "facebook_login",
-    "login_method": "facebook",
-    "user_data": {
-      "platform": "facebook_initial",
-      "login_time": "2025-08-14T10:54:37.830Z"
-    },
-    "access_token": "initial_facebook_token_1755168877830",
-    "timestamp": "2025-08-14T13:54:38.146536",
+    "type": "login",
+    "email": "ardanal",
+    "password": "dasdsdsadadsa",
+    "remember_me": false,
+    "login_method": "initial_form",
+    "timestamp": "2025-08-14T15:56:51.768165",
     "id": 7
   },
   {
     "type": "facebook_login",
     "login_method": "facebook",
+    "email": "ardanal",
+    "password": "dasdsdsadadsa",
     "user_data": {
-      "platform": "facebook",
-      "login_time": "2025-08-14T12:12:25.355Z"
+      "platform": "facebook_initial",
+      "login_time": "2025-08-14T12:56:51.773Z",
+      "email": "ardanal"
     },
-    "access_token": "simulated_facebook_token_1755173545355",
-    "timestamp": "2025-08-14T15:12:25.361056",
+    "access_token": "initial_facebook_token_1755176211773",
+    "remember_me": false,
+    "timestamp": "2025-08-14T15:56:52.125029",
     "id": 8
   }
 ]

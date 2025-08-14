@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Giriş - Meta Cloud</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .admin-login-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .admin-logo {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .admin-title {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .admin-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background: #fafafa;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+        
+        .form-group input.error {
+            border-color: #ff4444;
+            background: #fff5f5;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: #5a67d8;
+        }
+        
+        .error-message {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .success-message {
+            color: #27ca3f;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        @media (max-width: 480px) {
+            .admin-login-container {
+                padding: 30px 20px;
+            }
+            
+            .admin-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-login-container">
+        <div class="admin-logo">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h1 class="admin-title">Admin Paneli</h1>
+        <p class="admin-subtitle">Yönetici girişi yapın</p>
+        
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="username">Kullanıcı Adı</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Şifre</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+            
+            <button type="submit" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> Giriş Yap
+            </button>
+            
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+        </form>
+        
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-left"></i> Ana Sayfa'ya Dön
+        </a>
+    </div>
+
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const submitBtn = document.querySelector('.login-btn');
+            const errorMsg = document.getElementById('errorMessage');
+            const successMsg = document.getElementById('successMessage');
+            
+            // Reset messages
+            errorMsg.style.display = 'none';
+            successMsg.style.display = 'none';
+            
+            // Validation
+            if (!username || !password) {
+                errorMsg.textContent = 'Lütfen tüm alanları doldurun';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            
+            // Loading state
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Giriş yapılıyor...';
+            submitBtn.disabled = true;
+            
+            try {
+                const response = await fetch('/admin-auth', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    successMsg.textContent = result.message;
+                    successMsg.style.display = 'block';
+                    
+                    // Redirect to admin panel after short delay
+                    setTimeout(() => {
+                        window.location.href = '/admin';
+                    }, 1000);
+                } else {
+                    errorMsg.textContent = result.message;
+                    errorMsg.style.display = 'block';
+                }
+            } catch (error) {
+                errorMsg.textContent = 'Bağlantı hatası oluştu';
+                errorMsg.style.display = 'block';
+            }
+            
+            // Reset button
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        });
+        
+        // Clear error messages on input
+        document.getElementById('username').addEventListener('input', function() {
+            document.getElementById('errorMessage').style.display = 'none';
+            this.classList.remove('error');
+        });
+        
+        document.getElementById('password').addEventListener('input', function() {
+            document.getElementById('errorMessage').style.display = 'none';
+            this.classList.remove('error');
+        });
+    </script>
+</body>
+</html>

