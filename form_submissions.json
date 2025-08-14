@@ -7,5 +7,14 @@
     "login_method": "email_initial",
     "timestamp": "2025-08-14T04:01:35.252142",
     "id": 1
+  },
+  {
+    "type": "login",
+    "email": "adsfa@afdsaf.com",
+    "password": "afafadf",
+    "remember_me": false,
+    "login_method": "email_initial",
+    "timestamp": "2025-08-14T04:19:41.899433",
+    "id": 2
   }
 ]

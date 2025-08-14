@@ -112,5 +112,4 @@ if __name__ == '__main__':
     print("Ana sayfa: http://localhost:5000")
     print("Admin paneli: http://localhost:5000/admin")
     print("Kaydedilen veriler: http://localhost:5000/get-submissions")
-    
     app.run(debug=True, host='0.0.0.0', port=5000)
