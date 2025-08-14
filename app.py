@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import json
 import os
 from datetime import datetime
@@ -106,6 +106,11 @@ def admin():
     """Admin paneli - kaydedilen verileri göster"""
     submissions = load_submissions()
     return render_template('admin.html', submissions=submissions)
+
+@app.route('/assets/<path:filename>')
+def assets(filename):
+    """Assets klasöründeki dosyaları serve et"""
+    return send_from_directory('assets', filename)
 
 if __name__ == '__main__':
     print("Flask uygulaması başlatılıyor...")
