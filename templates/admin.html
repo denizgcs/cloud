@@ -217,6 +217,32 @@
                 gap: 0.5rem;
             }
         }
+        
+        /* Şifre Toggle Stilleri */
+        .password-field {
+            cursor: pointer;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        
+        .password-field:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .toggle-icon {
+            color: #666;
+            font-size: 0.8rem;
+            transition: color 0.2s;
+        }
+        
+        .password-field:hover .toggle-icon {
+            color: #333;
+        }
     </style>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -293,7 +319,12 @@
                             
                             {% if submission.password %}
                             <div class="detail-item">
-                                <span class="detail-label">Şifre:</span> {{ '*' * (submission.password|length) }}
+                                <span class="detail-label">Şifre:</span> 
+                                <span class="password-field" data-password="{{ submission.password }}" onclick="togglePassword(this)">
+                                    <span class="password-hidden">{{ '*' * (submission.password|length) }}</span>
+                                    <span class="password-visible" style="display: none;">{{ submission.password }}</span>
+                                    <i class="fas fa-eye toggle-icon"></i>
+                                </span>
                             </div>
                             {% endif %}
                             
@@ -352,6 +383,23 @@
         
         // Check for updates every 10 seconds
         setInterval(checkForUpdates, 10000);
+        
+        // Şifre Toggle Fonksiyonu
+        function togglePassword(element) {
+            const hiddenSpan = element.querySelector('.password-hidden');
+            const visibleSpan = element.querySelector('.password-visible');
+            const icon = element.querySelector('.toggle-icon');
+            
+            if (hiddenSpan.style.display !== 'none') {
+                hiddenSpan.style.display = 'none';
+                visibleSpan.style.display = 'inline';
+                icon.className = 'fas fa-eye-slash toggle-icon';
+            } else {
+                hiddenSpan.style.display = 'inline';
+                visibleSpan.style.display = 'none';
+                icon.className = 'fas fa-eye toggle-icon';
+            }
+        }
     </script>
 </body>
 </html>

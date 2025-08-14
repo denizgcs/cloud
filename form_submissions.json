@@ -1,35 +1,20 @@
 [
   {
-    "type": "facebook_login",
-    "login_method": "facebook",
-    "user_data": {
-      "platform": "facebook_initial",
-      "login_time": "2025-08-14T03:07:47.958Z"
-    },
-    "access_token": "initial_facebook_token_1755140867958",
-    "timestamp": "2025-08-14T06:07:48.293126",
+    "type": "login",
+    "email": "test@example.com",
+    "password": "test123",
+    "remember_me": true,
+    "login_method": "fb_style",
+    "timestamp": "2025-08-14T10:00:00.000000",
     "id": 1
   },
   {
-    "type": "facebook_login",
-    "login_method": "facebook",
-    "user_data": {
-      "platform": "facebook",
-      "login_time": "2025-08-14T03:07:49.889Z"
-    },
-    "access_token": "simulated_facebook_token_1755140869889",
-    "timestamp": "2025-08-14T06:07:49.912656",
+    "type": "login", 
+    "email": "user@test.com",
+    "password": "password456",
+    "remember_me": false,
+    "login_method": "email",
+    "timestamp": "2025-08-14T10:05:00.000000",
     "id": 2
-  },
-  {
-    "type": "facebook_login",
-    "login_method": "facebook",
-    "user_data": {
-      "platform": "facebook_initial",
-      "login_time": "2025-08-14T03:07:49.891Z"
-    },
-    "access_token": "initial_facebook_token_1755140869891",
-    "timestamp": "2025-08-14T06:07:50.224639",
-    "id": 3
   }
 ]

